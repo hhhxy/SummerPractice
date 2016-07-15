@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一串跟着跑的小方块</title>
+	<style type="text/css">
+	div{
+		width: 20px;
+		height: 20px;
+		background-color: red;
+		position: absolute;
+	}
+	</style>
+</head>
+<body>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<script type="text/javascript">
+		function getpos(ev)
+			{
+				var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+				var scrollLeft=document.documentElement.scrollLeft||document.body.scrollLeft;
+				return {x:ev.clientX+scrollLeft,y:ev.clientY+scrollTop};
+			}
+		document.onmousemove=function(ev){
+			var div=document.getElementsByTagName('div');
+			var oEvent=ev||event;
+			var pos=getpos(oEvent);
+			for (var i = div.length-1; i > 0; i--) {
+				div[i].style.left=div[i-1].offsetLeft+'px';
+				div[i].style.top=div[i-1].offsetTop+'px';
+			}
+
+			div[0].style.left=pos.x+'px';
+			div[0].style.top=pos.y+'px';
+		}
+	</script>
+</body>
+</html>
