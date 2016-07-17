@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义滚动条控制文字</title>
+	<style type="text/css">
+	#parent{
+		width: 600px;
+		height: 20px;
+		background-color: #ccc;
+		position: relative;
+		margin-left: 300px;
+	}
+	#div1{
+		width: 20px;
+		height: 20px;
+		background-color: red;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#div2{
+		width: 400px;
+		height: 300px;
+		border: 1px solid black;
+		overflow: hidden;
+		position: relative;
+	}
+	#div3{
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	</style>
+</head>
+<body>
+	<div id="parent">
+		<div id="div1"></div>
+	</div>
+	<div id="div2">
+		<div id="div3">
+			新华网北京7月16日电 15日晚间传来土耳其发生军事政变的消息。自上世纪60年代以来，土耳其平均每10年就要发生一次军事政变。人们不禁要问，土耳其为何政变多发。
+
+
+
+　　土耳其横跨欧亚两大洲，国土包括西亚的小亚细亚半岛和南欧巴尔干半岛的东色雷斯地区。历史上，土耳其是幅员辽阔的奥斯曼帝国的一部分。从19世纪初到第一次世界大战结束的一百多年间，奥斯曼帝国统治下的亚洲、非洲和欧洲地区纷纷独立，奥斯曼帝国土崩瓦解。
+
+　　第一次世界大战结束后不久，土耳其发生革命，其领导人是穆斯塔法·凯末尔·阿塔图尔克，因此这场革命被称为“凯末尔革命”。凯末尔本人是军人出生，早年曾参加主要由军人策动的青年土耳其革命。在第一次世界大战期间，他因指挥保卫海峡战役击败英法联军而名声大振，成为民族英雄。
+
+
+
+　　“凯末尔革命”中诞生了土耳其共和国，而军人一直在共和国的政治生活中扮演着重要角色，军队实力强大。该国被誉为西亚和中东地区除以色列之外军事力量最强大的国家。1952年土耳其加入北约，其军队被认为是北约第二大常规部队，总兵力约60万。强大的军事力量一直不甘于置身政治生活之外，这是土耳其屡屡发生军人干政甚至军事政变的一个重要原因。
+
+　　土耳其的绝大多数国民都信奉伊斯兰教。在奥斯曼帝国统治时期，历代君主们为了维持其统治合法性和正统性，不仅把伊斯兰教奉为国教，采纳政教合一政体，而且在全国推行伊斯兰化教育。凯末尔建立现代土耳其之后，严格执行政教分离，军人也成为政教分离政策的坚定捍卫者。
+
+　　但是，由于文化和历史传统，宗教对土耳其政治生活的影响一直很大，一些政治人物在成为国家领导人后，或明或暗地企图把一些宗教教义引入施政纲领，从而引发世俗开明派与宗教保守派的斗争，同时触动土耳其军人的敏感神经。这是导致土耳其多次发生军人干政甚至军事政变的另一个原因。
+
+
+
+　　土耳其国土的大部分位于亚洲，而且其历史和文化都有着浓郁的东方色彩，但是很多土耳其人却把自己看成是一个欧洲国家和西方世界的一员。这种情况也导致土耳其的政治倾向经常在东方与西方之间摇摆不定。一旦国家政策向某一个方向过分倾斜，就有可能导致政局混乱，这个时候，土耳其军队往往会介入发挥作用。这是土耳其难以消除军人干政阴霾的第三个原因。
+
+　　据报道，从1960年以来，不算15日的政变，土耳其已经发生至少6次军事政变，其中包括4次成功政变和2次未遂政变。政变多发导致政局动荡，也给土耳
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv1=document.getElementById('div1');
+			var oDiv=document.getElementById('parent');
+			var oDiv2=document.getElementById('div2');
+			var oDiv3=document.getElementById('div3');
+			var tarX=0;
+
+			oDiv1.onmousedown=function(ev){
+				var oEvent=ev||event;
+				tarX=oEvent.clientX- oDiv1.offsetLeft;
+				
+				document.onmousemove=function(ev){
+					var oEvent=ev||event;
+					var l=oEvent.clientX-tarX;
+					
+					if(l<0)
+					{
+						l=0;
+					}
+					if(l>(oDiv.offsetWidth- oDiv1.offsetWidth))
+					{
+						l=oDiv.offsetWidth- oDiv1.offsetWidth;
+					}
+
+					oDiv1.style.left=l+'px';
+
+					var scale=l/(oDiv.offsetWidth- oDiv1.offsetWidth)
+					document.title=scale;
+
+					oDiv3.style.top=-(scale*(oDiv3.offsetHeight-oDiv2.offsetHeight))+'px';
+				}
+				oDiv1.onmouseup=function(){
+					document.onmousemove=null;
+					document.onmouseup=null;
+				}
+
+				return false;
+			}
+			
+		}
+	</script>
+</body>
+</html>

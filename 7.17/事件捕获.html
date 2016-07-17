@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件捕获</title>
+	<!-- 点击任意位置都可弹出a -->
+</head>
+<body>
+	<input id="btn" type="button" value="an"></input>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oBtn=document.getElementById('btn');
+			oBtn.onclick=function(){
+				alert('a');
+			}
+			oBtn.setCapture();
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件绑定</title>
+	<!-- 兼容IE FF Chrom -->
+</head>
+<body>
+	<input id="btn" type="button" value="an"></input>
+	<script type="text/javascript">
+		// window.onload=function(){
+		// 	var oBtn=document.getElementById('btn');
+		// 	oBtn.onclick=function(){
+		// 		alert('a');
+		// 	}
+		// }
+		// window.onload=function(){
+		// 	var oBtn=document.getElementById('btn');
+		// 	oBtn.onclick=function(){
+		// 		alert('b');
+		// 	}
+		// }
+		// window.onload=function(){
+		// 	var oBtn=document.getElementById('btn');
+		// 	oBtn.attachEvent('onclick',function(){
+		// 		alert('a');
+		// 	});
+		// 	oBtn.attachEvent('onclick',function(){
+		// 		alert('b')
+		// 	});
+		// }
+		function getEvent(obj,ev,fn){
+			if(obj.attachEvent)
+			{
+				obj.attachEvent('on'+ev,fn);
+			}
+			else{
+				obj.addEventListener(ev,fn)	;
+			}
+		}
+		window.onload=function(){
+			var oBtn=document.getElementById('btn');
+			// oBtn.addEventListener('click',function(){
+			// 	alert('a');
+			// });
+			// oBtn.addEventListener('click',function(){
+			// 	alert('b')
+			// });
+		
+		// if(oBtn.attachEvent)
+		// {
+		// 	oBtn.attachEvent('onclick',function(){
+		// 		alert('a');
+		// 	});
+		// 	oBtn.attachEvent('onclick',function(){
+		// 		alert('b')
+		// 	});
+		// }
+		// else{
+		// 	oBtn.addEventListener('click',function(){
+		// 		alert('a');
+		// 	});
+		// 	oBtn.addEventListener('click',function(){
+		// 		alert('b')
+		// 	});
+		// }
+		getEvent(oBtn,'click',function(){
+			alert('a');
+		})
+		getEvent(oBtn,'click',function(){
+			alert('b');
+		})
+	}
+	</script>
+</body>
+</html>

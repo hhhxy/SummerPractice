@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义滚动条控制方块大小</title>
+	<style type="text/css">
+	#parent{
+		width: 600px;
+		height: 20px;
+		background-color: #ccc;
+		position: relative;
+		margin-left: 300px;
+	}
+	#div1{
+		width: 20px;
+		height: 20px;
+		background-color: red;
+		position: absolute;
+		top: 0;
+		left: 0px;
+	}
+	#div2{
+		width: 0;
+		height: 0;
+		background-color: green;
+	}
+	</style>
+</head>
+<body>
+	<div id="parent">
+		<div id="div1"></div>
+	</div>
+	<div id="div2"></div>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv1=document.getElementById('div1');
+			var oDiv=document.getElementById('parent');
+			var oDiv2=document.getElementById('div2');
+			var tarX=0;
+
+			oDiv1.onmousedown=function(ev){
+				var oEvent=ev||event;
+				tarX=oEvent.clientX- oDiv1.offsetLeft;
+				
+				document.onmousemove=function(ev){
+					var oEvent=ev||event;
+					var l=oEvent.clientX-tarX;
+					
+					if(l<0)
+					{
+						l=0;
+					}
+					if(l>(oDiv.offsetWidth- oDiv1.offsetWidth))
+					{
+						l=oDiv.offsetWidth- oDiv1.offsetWidth;
+					}
+
+					oDiv1.style.left=l+'px';
+
+					var scale=l/(oDiv.offsetWidth- oDiv1.offsetWidth)
+					document.title=scale;
+
+					oDiv2.style.width=400*scale+'px';
+					oDiv2.style.height=400*scale+'px';
+				}
+				oDiv1.onmouseup=function(){
+					document.onmousemove=null;
+					document.onmouseup=null;
+				}
+
+				return false;
+			}
+			
+		}
+	</script>
+</body>
+</html>
