@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- loading mui -->
+	<link rel="stylesheet" type="text/css" href="css/mui.min.css">
+	<!-- loading mui.picker.min.css -->
+	<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css">
+	<!-- loading mui.poppicker.css -->
+	<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css">
+	<link rel="stylesheet" type="text/css" href="css/grade.css">
+	<title>Grades</title>
+</head>
+<body>
+<div class="main">
+	<header id="header" class="mui-bar mui-bar-nav">
+		<h1 class="mui-title">西安邮电大学</h1>
+		<a class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" href="javascript:history.go(-1)"><span class="mui-icon mui-icon-left-nav"></span></a>
+		<a class="mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+	</header>
+	<!-- 右上角弹出菜单 -->
+	<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="Grades.html">我要查询</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="rate.html">我要评价</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="user_bind.html">我要注册</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="Person_infor.html">个人中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	<div class="select"> 
+	    <span onclick="showSelect(this,'sub_list')">请选择▼</span> 
+	    <div id="sub_list" class="hidden" onclick="this.style.display = 'none'"> 
+		    <ul> 
+		      <li id="resent">2015-2016</li>
+		      <li id="one">2014-2015</li>
+		      <li id="two">2013-2014</li>
+		      <li id="three">2012-2013</li>
+		    </ul> 
+		</div> 
+	</div> 
+	<div id="show" class="show">
+	</div>
+</div>
+<!-- loading mui -->
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<!-- loading picker -->
+	<script type="text/javascript" src="js/mui.picker.min.js"></script>
+	<!-- loading popicker -->
+	<script type="text/javascript" src="js/mui.poppicker.js"></script>
+<script type="text/javascript">
+		window.onload= function() {
+			var name=getCookieValue('username');
+			var session=getCookieValue('session');
+			// console.log(document.cookie);
+				$.ajax({
+					url:'http://scoreapi.xiyoumobile.com/score/all?session='+session+'&username='+name,
+					data:{
+						
+					},
+					type:'GET',
+					cache:false,
+					jsonp:'callback',
+					dataType:'jsonp',
+					success:function(grade){
+						if(grade.error==true)
+						{
+							alert('请检查');
+						}
+						else
+						{
+							document.getElementById('resent').addEventListener('click',function(){
+								showGradeRecent(grade);
+								// console.log(grade);
+							});
+							document.getElementById('one').addEventListener('click',function(){
+								showGradeThrid(grade);
+								// console.log(grade);
+							});
+							document.getElementById('two').addEventListener('click',function(){
+								showGradeSecond(grade);
+								// console.log(grade);
+							});
+							document.getElementById('three').addEventListener('click',function(){
+								showGradeFirst(grade);
+								// console.log(grade);
+							});
+						}
+					}
+				});
+			
+	}
+
+// 模拟select
+function showSelect(hld,id){ 
+    var ele = document.getElementById(id); 
+    ele.style.display = 'block'; 
+    var timer = null; 
+    ele.onmouseover = function(){ 
+        if(timer){ 
+            clearTimeout(timer); 
+        } 
+        ele.style.display = 'block'; 
+    } 
+    ele.onmouseout = function(){ 
+        timer = setTimeout(function(){ele.style.display = 'none'},10); 
+    } 
+    
+    hld.onmouseover = function(){ 
+        if(timer){ 
+            clearTimeout(timer); 
+        } 
+    } 
+    hld.onmouseout = function(){ 
+        timer = setTimeout(function(){ele.style.display = 'none'},10); 
+    } 
+} 
+
+// 显示不同年份成绩
+function showGradeRecent(grade){
+	$("#show div").remove();
+	var annual=grade.result.score;
+	var score1=grade.result.score[annual.length-1].Terms[0].Scores;
+	// console.log(score1);
+	showGrade1(score1);
+	var score2=grade.result.score[annual.length-1].Terms[1].Scores;
+	// console.log(score2);
+	showGrade2(score2);
+	// console.log(score2);
+}
+function showGradeThrid(grade){
+	$("#show div").remove();
+	var annual=grade.result.score;
+	if(annual.length==2)
+	{
+		var score1=grade.result.score[annual.length-2].Terms[0].Scores;
+		// console.log(score1);
+		showGrade1(score1);
+		var score2=grade.result.score[annual.length-2].Terms[1].Scores;
+		// console.log(score2);
+		showGrade2(score2);
+	}
+	// console.log(score2);
+}
+function showGradeSecond(grade){
+	$("#show div").remove();
+	var annual=grade.result.score;
+	if(annual.length==3)
+	{
+		var score1=grade.result.score[annual.length-3].Terms[0].Scores;
+		showGrade1(score1);
+		var score2=grade.result.score[annual.length-3].Terms[1].Scores;
+		console.log(score2);
+		showGrade2(score2);
+	}
+	// console.log(score2);
+}
+function showGradeFirst(grade){
+	$("#show div").remove();
+	var annual=grade.result.score;
+	if(annual.length==4)
+	{
+		var score1=grade.result.score[annual.length-4].Terms[0].Scores;
+		showGrade1(score1);
+		var score2=grade.result.score[annual.length-4].Terms[1].Scores;
+		showGrade2(score2);
+	}
+	// console.log(score2);
+}
+
+function showGrade1(data1){
+	// console.log(data);
+	var semster=document.createElement('div');
+	semster.innerHTML='第一学期';
+	var oDiv=document.getElementById('show');
+	// oDiv.innerHTML='1111';
+	for (var i = 0; i < data1.length; i++) {
+		var oUl = document.createElement('ul');
+		var title = document.createElement('li');
+		title.innerHTML="课程名："+data1[i].Title;
+		oUl.appendChild(title);
+		var type = document.createElement('li');
+		type.innerHTML="课程类型："+data1[i].Type;
+		oUl.appendChild(type);
+		var school = document.createElement('li');
+		school.innerHTML="学院："+data1[i].School;
+		oUl.appendChild(school);
+		if(data1[i].TestScore.length==0){
+			var real = document.createElement('li');
+			real.innerHTML='期中成绩：'+'/';
+			oUl.appendChild(real);
+			var Test = document.createElement('li');
+			Test.innerHTML='卷面成绩：'+data1[i].RealScore;
+			oUl.appendChild(Test);
+		}
+		else{
+			var real = document.createElement('li');
+			real.innerHTML='期中成绩：'+data1[i].RealScore;
+			oUl.appendChild(real);
+			var Test = document.createElement('li');
+			Test.innerHTML='卷面成绩：'+data1[i].TestScore;
+			oUl.appendChild(Test);
+		}
+		var usual = document.createElement('li');
+		usual.innerHTML='平时成绩：'+data1[i].UsualScore;
+		oUl.appendChild(usual);
+		var end = document.createElement('li');
+		end.innerHTML='最终成绩：'+data1[i].EndScore;
+		oUl.appendChild(end);
+		semster.appendChild(oUl);
+	}
+	oDiv.appendChild(semster);
+}
+function showGrade2(data2){
+	// console.log(data);
+	var semster=document.createElement('div');
+	semster.innerHTML='第二学期';
+	var oDiv=document.getElementById('show');
+	// oDiv.innerHTML='1111';
+	for (var i = 0; i < data2.length; i++) {
+		var oUl = document.createElement('ul');
+		var title = document.createElement('li');
+		title.innerHTML="课程名："+data2[i].Title;
+		oUl.appendChild(title);
+		var type = document.createElement('li');
+		type.innerHTML="课程类型："+data2[i].Type;
+		oUl.appendChild(type);
+		var school = document.createElement('li');
+		school.innerHTML="学院："+data2[i].School;
+		oUl.appendChild(school);
+		if(data2[i].TestScore.length==0){
+			var real = document.createElement('li');
+			real.innerHTML='期中成绩：'+'/';
+			oUl.appendChild(real);
+			var Test = document.createElement('li');
+			Test.innerHTML='卷面成绩：'+data2[i].RealScore;
+			oUl.appendChild(Test);
+		}
+		else{
+			var real = document.createElement('li');
+			real.innerHTML='期中成绩：'+data2[i].RealScore;
+			oUl.appendChild(real);
+			var Test = document.createElement('li');
+			Test.innerHTML='卷面成绩：'+data2[i].TestScore;
+			oUl.appendChild(Test);
+		}
+		var usual = document.createElement('li');
+		usual.innerHTML='平时成绩：'+data2[i].UsualScore;
+		oUl.appendChild(usual);
+		var end = document.createElement('li');
+		end.innerHTML='最终成绩：'+data2[i].EndScore;
+		oUl.appendChild(end);
+		semster.appendChild(oUl);
+	}
+	oDiv.appendChild(semster);
+}
+
+function getCookieValue(name){  /**获取cookie的值，根据cookie的键获取值**/  
+    //用处理字符串的方式查找到key对应value  
+    var name = escape(name);  
+    //读cookie属性，这将返回文档的所有cookie  
+    var allcookies = document.cookie;         
+    //查找名为name的cookie的开始位置  
+    name += "=";  
+    var pos = allcookies.indexOf(name);      
+    //如果找到了具有该名字的cookie，那么提取并使用它的值  
+    if (pos != -1){                                             //如果pos值为-1则说明搜索"version="失败  
+        var start = pos + name.length;                  //cookie值开始的位置  
+        var end = allcookies.indexOf(";",start);        //从cookie值开始的位置起搜索第一个";"的位置,即cookie值结尾的位置  
+        if (end == -1) end = allcookies.length;        //如果end值为-1说明cookie列表里只有一个cookie  
+        var value = allcookies.substring(start,end); //提取cookie的值  
+        return (value);                           //对它解码        
+    }else{  //搜索失败，返回空字符串  
+        return "";  
+    }  
+} 　
+	</script>
+</body>
+</html>

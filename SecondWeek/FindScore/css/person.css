@@ -1,0 +1,65 @@
+.main{
+	font-family: 'Poiret One', cursive;
+}
+.mui-bar-nav a{
+	color: black;
+}
+.mui-title{
+	font-size: 1.5rem;
+}
+.photo{
+	margin-top: 20%;
+}
+.sex{
+	width: 10%;
+	height:10%;
+	margin-left: 15%;
+	margin-bottom: 10%;
+
+}
+.pho{
+	width: 30%;
+	height: 30%;
+	border-radius: 50%;
+	margin-left: 5%;
+}
+.photo p{
+	/*margin-left: 30%;*/
+	text-align: center;
+}
+.boder{
+	overflow: hidden;
+}
+.bg{
+	margin-top: 5%;
+	width: 100%;
+	height: 65%;
+	z-index: -999;
+	position: absolute;
+}
+.infor{
+	margin-top: 25%;
+}
+.infor li{
+	margin-top:8%;
+	/*text-align: center;*/
+	letter-spacing: .2em;
+}
+#user{
+	font-size: 1.5rem;
+}
+#topPopover {
+  position: absolute;
+  top: 16px;
+  right: 6px;
+  z-index: 10000; }
+
+#topPopover .mui-popover-arrow {
+  left: auto;
+  right: 6px; }
+
+.mui-popover {
+  height: 180px; }
+
+.mui-content {
+  padding: 10px; }

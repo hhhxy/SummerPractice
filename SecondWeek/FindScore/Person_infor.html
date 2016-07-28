@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- loading mui -->
+	<link rel="stylesheet" type="text/css" href="css/mui.min.css">
+	<!-- loading mui.picker.min.css -->
+	<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css">
+	<!-- loading mui.poppicker.css -->
+	<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css">
+	<link rel="stylesheet" type="text/css" href="css/reset css.css">
+	<link rel="stylesheet" type="text/css" href="css/person.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+	<title>Information</title>
+</head>
+<body>
+<div class="main">
+	<header id="header" class="mui-bar mui-bar-nav">
+		<h1 class="mui-title">profile</h1>
+		<a class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" href="javascript:history.go(-1)"><span class="mui-icon mui-icon-left-nav"></span></a>
+		<a class="mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+	</header>
+	<!-- 右上角弹出菜单 -->
+	<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="Grades.html">我要查询</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="rate.html">我要评价</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="user_bind.html">我要注册</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="Person_infor.html">个人中心</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	<div class="photo">
+		<img id="sex" class="sex" src="img/girl.png">
+		<img id="pho" class="pho" src="img/head.png">
+		<p id="user"></p>
+	</div>
+	<div class="boder">
+		<img class="bg" src="img/inforbg.png">
+		<ul id="ul1" class="infor">
+			<!-- <li>1111</li> -->
+		</ul>
+	</div>
+</div>
+<!-- loading mui -->
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<!-- loading picker -->
+	<script type="text/javascript" src="js/mui.picker.min.js"></script>
+	<!-- loading popicker -->
+	<script type="text/javascript" src="js/mui.poppicker.js"></script>
+<script type="text/javascript">
+window.onload=function(){
+var name=getCookieValue('username');
+var pass=getCookieValue('password');
+var session=getCookieValue('session');
+	$.ajax({
+		url:'http://scoreapi.xiyoumobile.com/users/info',
+		data:{
+			username:name,
+			password:pass,
+			session:session
+		},
+		type:'POST',
+		cache:false,
+		dataType:'jsonp',
+		success:function(person){
+			
+			if(person.error==true)
+			{
+				alert('请检查');
+			}
+			else
+			{
+				if(person.result.sex=='男')
+				{
+					document.getElementById('sex').src='img/boy.png'
+				}
+				document.getElementById('user').innerHTML='Welcome！'+person.result.name;
+				document.getElementById('pho').src='http://scoreapi.xiyoumobile.com/users/img?username='+name+'&session='+session;
+				// console.log(person);
+				// console.log(session);
+				GetPerson(person);
+				deleteCookie(session,'/')
+			}
+		}
+	});
+}
+function getCookieValue(name){  /**获取cookie的值，根据cookie的键获取值**/  
+    //用处理字符串的方式查找到key对应value  
+    var name = escape(name);  
+    //读cookie属性，这将返回文档的所有cookie  
+    var allcookies = document.cookie;         
+    //查找名为name的cookie的开始位置  
+    name += "=";  
+    var pos = allcookies.indexOf(name);      
+    //如果找到了具有该名字的cookie，那么提取并使用它的值  
+    if (pos != -1){                                             //如果pos值为-1则说明搜索"version="失败  
+        var start = pos + name.length;                  //cookie值开始的位置  
+        var end = allcookies.indexOf(";",start);        //从cookie值开始的位置起搜索第一个";"的位置,即cookie值结尾的位置  
+        if (end == -1) end = allcookies.length;        //如果end值为-1说明cookie列表里只有一个cookie  
+        var value = allcookies.substring(start,end); //提取cookie的值  
+        return (value);                           //对它解码        
+    }else{  //搜索失败，返回空字符串  
+        return "";  
+    }  
+} 
+function GetPerson(person){
+	var nam = document.createElement('li');
+	nam.innerHTML='Name：'+person.result.name;
+	document.getElementById('ul1').appendChild(nam);
+	var sex = document.createElement('li');
+	sex.innerHTML='Sex：'+person.result.sex;
+	document.getElementById('ul1').appendChild(sex);
+	var bir = document.createElement('li');
+	bir.innerHTML='Birthday：'+person.result.brithday;
+	document.getElementById('ul1').appendChild(bir);
+	var clg = document.createElement('li');
+	clg.innerHTML='Department：'+person.result.college;
+	document.getElementById('ul1').appendChild(clg);
+	var cla = document.createElement('li');
+	cla.innerHTML='Class：'+person.result.class;
+	document.getElementById('ul1').appendChild(cla);
+	var num = document.createElement('li');
+	num.innerHTML='Number：'+person.result.username;
+	document.getElementById('ul1').appendChild(num);
+}　
+function deleteCookie(name,path){   /**根据cookie的键，删除cookie，其实就是设置其失效**/  
+    var name = escape(name);  
+    var expires = new Date(0);  
+    path = path == "" ? "" : ";path=" + path;  
+    document.cookie = name + "="+ ";expires=" + expires.toUTCString() + path;  
+}  　
+</script>
+</body>
+</html>

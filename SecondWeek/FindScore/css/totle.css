@@ -1,0 +1,45 @@
+#topPopover {
+  position: absolute;
+  top: 16px;
+  right: 6px;
+  z-index: 10000; }
+
+#topPopover .mui-popover-arrow {
+  left: auto;
+  right: 6px; }
+
+.mui-popover {
+  height: 180px; 
+}
+.mui-content {
+  padding: 10px; 
+}
+p{
+	margin-top: 50%;
+	text-align: center;
+	font-size: 2rem;
+}
+.rate{
+	margin-top: 20%;
+	width: 100%;
+}
+.rate textarea{
+	width: 80%;
+	height: auto;
+	margin: 0 auto;
+	border-radius: 15%;
+	margin-left: 10%;
+}
+.mui-btn-primary{
+	margin-left: 60%;
+}
+.thanks{
+	width: 50%;
+	font-size: 1.5rem;
+	background-color: #ff9daa;
+	color: #fff;
+	padding: 5%;
+	border-radius: 20%;
+	margin-left: 20%;
+	display: none;
+}

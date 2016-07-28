@@ -1,0 +1,140 @@
+/*body{
+	background-color: #fff;
+	background-image: url(../img/3.jpg);
+}*/
+.bg{
+	z-index: -999;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.main{
+	width: auto;
+	height: 100%;
+	overflow: hidden;
+	font-family:Helvetica;
+}
+.logo{
+	width: 80%;
+	height: 10%;
+	display: block;
+	margin: 0 auto;
+	margin-top: 5%;
+	margin-bottom: 8%;
+}
+.per{
+	display: block;
+	width: 20%;
+	height: 20%;
+	opacity: 0.5;
+	filter:Alpha(opacity=50);
+	-webkit-border-radius:50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	margin-bottom: -10%;
+	margin-left: 5%;
+}
+.landing{
+	background-color: rgba(0,0,0,0.5);
+	border-radius: 2%;
+	color: #fff;
+	font-size: 6rem;
+	margin: 0 auto;
+	margin-top: 5%;
+	width: 80%;
+	border: 1px solid #fff;
+}
+@media \0screen\,screen\9 {/* 只支持IE6、7、8 */
+  .landing{
+    background-color:#000000;
+    filter:Alpha(opacity=50);
+    position:static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+    *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+  }
+ 	.landing div{
+    position: relative;/* 设置子元素为相对定位，可让子元素不继承Alpha值 */
+  }  
+}
+.log{
+	padding-left: 32%;
+	padding-top: 8%;
+}
+.landing div{
+	width: 80%;
+	margin: 0 auto;
+	/*border: 1px solid #ccc;*/
+	border-radius: 2%;
+}
+.login_putin ul li{
+	margin-top: 6%;
+}
+.login_putin ul li span{
+	font-size: 4rem;
+}
+.login_putin ul li input{
+	margin: 0 auto;
+	width:70%;
+	/*padding: 3em 2em 2em 5em;*/
+	-webkit-border-radius:.5em;
+	-moz-border-radius: .5em;
+	border: 1px solid #999;
+	font-size: 4rem;
+	outline: none;
+	text-align: center;
+}
+.login_btn{
+	margin-bottom: 8%;
+}
+.login_btn input{
+	width:80%;
+	display: block;
+	margin:0 auto;
+	margin-top: 8%;
+	padding:.5em 0;
+	-webkit-border-radius:.4em;
+	-moz-border-radius: .4em;
+	border:#1263be solid 1px;
+	background:#70b3f2;
+	color:#FFF;
+	font-size:3rem;
+	font-weight:bolder;
+	letter-spacing:2em;
+}
+.login_btn input:hover{
+	width: 90%;
+	background-color: #f66d52;
+	 -webkit-transition: all 0.3s ease;
+	  	-moz-transition: all 0.3s ease;
+	 	transition: all 0.3s ease;
+	outline: none;
+}
+.kong{
+	padding-top: 8%;
+}
+.take_place{
+	width: 100%;
+	height: 5%;
+}
+.point{
+	margin-left: 10%;
+	margin-top: -50%;
+	display: none;
+	position: absolute;
+	z-index: 999;
+	color: #fc5c1d;
+	background-color: rgba(255,255,255,1);
+	font-size: 4rem;
+	-webkit-border-radius:.4em;
+	-moz-border-radius: .4em; 
+	padding: 10%;
+	box-shadow: 0 7px 7px rgba(0,0,0,.5);
+}
+/*.triangle{
+	font-size: 8em;
+	color: black;
+	display: block;
+	opacity: 0.5;
+	margin-bottom: -8%;
+	margin-left: 75%;
+}*/

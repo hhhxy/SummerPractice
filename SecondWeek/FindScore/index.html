@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/reset css.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+<div class="totle">
+	<div class="first">
+		<img id="pho" src="img/head.png">
+		<p id="user"></p>
+	</div>
+	<ul class="second">
+		<li><a href="Person_infor.html"><img src="img/person.png"></a><span>个人信息</span></li>
+		<li><a href="Grades.html"><img src="img/find.png"></a><span>成绩查询</span></li>
+		<li><a href="information.html"><img src="img/infor.png"></a><span>消息通知</span></li>
+		<li><a href="information.html"><img src="img/ben.png"></a><span>课表查询</span></li>
+		<li><a href="information.html"><img src="img/pen.png"></a><span>考试安排</span></li>
+		<li><a href="information.html"><img src="img/squery.png"></a><span>培养计划</span></li>
+	</ul>
+	<div onclick="show()"><img class="set" src="img/set.png"></div>
+	<div id="quit" class="out"><a href="Log_In.html">退出登录</a></div>
+</div>
+<script type="text/javascript">
+window.onload=function(){
+	var oUser=document.getElementById('user');
+	var pho=document.getElementById('pho');
+	var name=getCookieValue('username');
+	var pass=getCookieValue('password');
+	var session=getCookieValue('session');
+	document.getElementById('pho').src='http://scoreapi.xiyoumobile.com/users/img?username='+name+'&session='+session;
+		$.ajax({
+			url:'http://scoreapi.xiyoumobile.com/users/info',
+			data:{
+				username:name,
+				password:pass,
+				session:session
+			},
+			type:'POST',
+			cache:false,
+			dataType:'jsonp',
+			success:function(person){
+				
+				if(person.error==true)
+				{
+					alert('请检查');
+				}
+				else
+				{
+					oUser.innerHTML='您好！'+person.result.name+'同学！';
+					// console.log(person);
+					deleteCookie(session,'/')
+				}
+			}
+		});
+}
+function getCookieValue(name){  /**获取cookie的值，根据cookie的键获取值**/  
+    //用处理字符串的方式查找到key对应value  
+    var name = escape(name);  
+    //读cookie属性，这将返回文档的所有cookie  
+    var allcookies = document.cookie;         
+    //查找名为name的cookie的开始位置  
+    name += "=";  
+    var pos = allcookies.indexOf(name);      
+    //如果找到了具有该名字的cookie，那么提取并使用它的值  
+    if (pos != -1){                                             //如果pos值为-1则说明搜索"version="失败  
+        var start = pos + name.length;                  //cookie值开始的位置  
+        var end = allcookies.indexOf(";",start);        //从cookie值开始的位置起搜索第一个";"的位置,即cookie值结尾的位置  
+        if (end == -1) end = allcookies.length;        //如果end值为-1说明cookie列表里只有一个cookie  
+        var value = allcookies.substring(start,end); //提取cookie的值  
+        return (value);                           //对它解码        
+    }else{  //搜索失败，返回空字符串  
+        return "";  
+    }  
+} 
+
+function show(){
+	var name=getCookieValue('username');
+	var pass=getCookieValue('password');
+	var session=getCookieValue('session');
+	deleteCookie(session,'/');
+	deleteCookie(name,'/');
+	deleteCookie(pass,'/');
+	document.getElementById('quit').style.display='block';
+}
+function deleteCookie(name,path){   /**根据cookie的键，删除cookie，其实就是设置其失效**/  
+    var name = escape(name);  
+    var expires = new Date(0);  
+    path = path == "" ? "" : ";path=" + path;  
+    document.cookie = name + "="+ ";expires=" + expires.toUTCString() + path;  
+}  　
+	</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人信息</title>
+	<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+	<input id="btn" type="submit" value="提交" onclick="abc()"></input>
+	<script type="text/javascript">
+			window.onload=function(){
+			var name=getCookieValue('username');
+			var pass=getCookieValue('password');
+			var session=getCookieValue('session');
+				$.ajax({
+					url:'http://scoreapi.xiyoumobile.com/users/info',
+					data:{
+						username:name,
+						password:pass,
+						session:session
+					},
+					type:'POST',
+					cache:false,
+					dataType:'jsonp',
+					success:function(person){
+						
+						if(person.error==true)
+						{
+							alert('请检查');
+						}
+						else
+						{
+							console.log(person);
+							console.log(session);
+							GetPerson(person);
+							deleteCookie(session,'/')
+						}
+					}
+				});
+			
+	}
+function getCookieValue(name){  /**获取cookie的值，根据cookie的键获取值**/  
+    //用处理字符串的方式查找到key对应value  
+    var name = escape(name);  
+    //读cookie属性，这将返回文档的所有cookie  
+    var allcookies = document.cookie;         
+    //查找名为name的cookie的开始位置  
+    name += "=";  
+    var pos = allcookies.indexOf(name);      
+    //如果找到了具有该名字的cookie，那么提取并使用它的值  
+    if (pos != -1){                                             //如果pos值为-1则说明搜索"version="失败  
+        var start = pos + name.length;                  //cookie值开始的位置  
+        var end = allcookies.indexOf(";",start);        //从cookie值开始的位置起搜索第一个";"的位置,即cookie值结尾的位置  
+        if (end == -1) end = allcookies.length;        //如果end值为-1说明cookie列表里只有一个cookie  
+        var value = allcookies.substring(start,end); //提取cookie的值  
+        return (value);                           //对它解码        
+    }else{  //搜索失败，返回空字符串  
+        return "";  
+    }  
+} 
+function GetPerson(person){
+	var bir = document.createElement('div');
+	bir.innerHTML='生日：'+person.result.brithday;
+	document.body.appendChild(bir);
+	var cla = document.createElement('div');
+	cla.innerHTML='班级：'+person.result.class;
+	document.body.appendChild(cla);
+	var clg = document.createElement('div');
+	clg.innerHTML='院系：'+person.result.college;
+	document.body.appendChild(clg);
+	var nam = document.createElement('div');
+	nam.innerHTML='姓名：'+person.result.name;
+	document.body.appendChild(nam);
+	var sex = document.createElement('div');
+	sex.innerHTML='性别：'+person.result.sex;
+	document.body.appendChild(sex);
+	var num = document.createElement('div');
+	num.innerHTML='学号：'+person.result.username;
+	document.body.appendChild(num);
+}　
+function deleteCookie(name,path){   /**根据cookie的键，删除cookie，其实就是设置其失效**/  
+    var name = escape(name);  
+    var expires = new Date(0);  
+    path = path == "" ? "" : ";path=" + path;  
+    document.cookie = name + "="+ ";expires=" + expires.toUTCString() + path;  
+}  　
+	</script>
+</body>
+</html>
